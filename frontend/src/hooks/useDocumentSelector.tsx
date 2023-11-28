@@ -30,6 +30,41 @@ export const useDocumentSelector = () => {
 
   const sortedAvailableYears = sortSelectOptions(availableYears);
 
+   // States for the new section
+   const [myDocuments, setMyDocuments] = useState<SelectOption | null>(null);
+  
+   const handleAddDocumentWithMySelector = () => {
+      if (myDocuments) {
+          const newDoc = availableDocuments.find(doc => doc.id === myDocuments.value);
+
+          if (newDoc && !selectedDocuments.find(doc => doc.id === newDoc.id)) {
+              setSelectedDocuments(prevDocs => [...prevDocs, newDoc]);
+          }
+
+          // Clear the current selection in MyDocumentSelector
+          setMyDocuments(null);
+      }
+   }; 
+
+/*   const handleAddDocumentWithMySelector = () => {
+    if (myDocuments) {
+        // Find the actual document using the selected document's value
+        const newDoc = availableDocuments.find(doc => doc.id === myDocuments.value);
+
+        // Add the new document to the list of selected documents if it's not already there
+        setSelectedDocuments(prevDocs => {
+            if (prevDocs.find(doc => doc.id === myDocuments.value)) {
+                return prevDocs;
+            }
+            return newDoc ? [newDoc, ...prevDocs] : prevDocs;
+        });
+
+        // Clear the current selection
+        setMyDocuments(null);
+    }
+  }; */
+
+
   useEffect(() => {
     setAvailableTickers(getAllTickers(availableDocuments));
   }, [availableDocuments]);
@@ -181,5 +216,9 @@ export const useDocumentSelector = () => {
     selectDocumentType,
     shouldFocusCompanySelect,
     setShouldFocusCompanySelect,
+    // Return values for the new section
+    myDocuments,
+    setMyDocuments,
+    handleAddDocumentWithMySelector,    
   };
 };

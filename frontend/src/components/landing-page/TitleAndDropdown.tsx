@@ -21,6 +21,9 @@ import { useIntercom } from "react-use-intercom";
 import { LoadingSpinner } from "~/components/basics/Loading";
 import useIsMobile from "~/hooks/utils/useIsMobile";
 
+//Use the new component MyDocumentSelector
+import { MyDocumentSelector } from '~/components/landing-page/MyDocumentSelector';
+
 export const TitleAndDropdown = () => {
   const router = useRouter();
 
@@ -62,6 +65,10 @@ export const TitleAndDropdown = () => {
     shouldFocusCompanySelect,
     setShouldFocusCompanySelect,
     sortedSelectedDocuments,
+    // Use the new component MyDocumentSelector
+    myDocuments,
+    setMyDocuments,
+    handleAddDocumentWithMySelector,    
   } = useDocumentSelector();
 
   const { boot } = useIntercom();
@@ -95,6 +102,15 @@ export const TitleAndDropdown = () => {
           <GitHubButton href="https://github.com/run-llama/sec-insights">Open-Sourced on Github</GitHubButton>
         </div>
       </div>
+
+{/*       {!isMobile && (
+                <MyDocumentSelector
+                    myDocuments={myDocuments}
+                    setMyDocuments={setMyDocuments}
+                    handleAddDocumentWithMySelector={handleAddDocumentWithMySelector}
+                />
+            )} */}
+
       {isMobile ? (
         <div className="mt-12 flex h-1/5 w-11/12 rounded border p-4 text-center">
           <div className="text-xl font-bold">
@@ -218,6 +234,23 @@ export const TitleAndDropdown = () => {
               </div>
             ))}
           </div>
+
+
+              <button
+                className="m-4 rounded border bg-llama-indigo px-8 py-2 text-white hover:bg-[#3B3775] disabled:bg-gray-30"
+                onClick={handleAddDocumentWithMySelector}
+                disabled={false}
+              >
+                Add2
+              </button>
+
+
+              <MyDocumentSelector
+              myDocuments={myDocuments}
+              setMyDocuments={setMyDocuments}
+              //handleAdd2={handleAddDocumentWithMySelector}
+              handleAddDocumentWithMySelector={handleAddDocumentWithMySelector}
+            />   
 
           <div className="h-1/8 mt-2 flex w-full items-center justify-center rounded-lg bg-gray-00">
             <div className="flex flex-wrap items-center justify-center">
