@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [{include = "app"}]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.10,<3.12"
 fastapi = "0.100.1"
 pydantic = "^1.10.8"
 uvicorn = "^0.22.0"
@@ -25,12 +25,13 @@ fsspec = "^2023.6.0"
 pdfkit = "^1.0.0"
 pgvector = "^0.1.8"
 sentry-sdk = {extras = ["fastapi"], version = "^1.28.1"}
-llama-index = "^0.8.2"
+llama-index = "0.9.7"
 polygon = "^1.1.0"
 polygon-api-client = "^1.12.3"
 nltk = "^3.8.1"
 cachetools = "^5.3.1"
 greenlet = "^2.0.2"
+email-validator = "^2.0.0.post2"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -39,7 +40,7 @@ pytest = "^7.3.2"
 sseclient-py = "^1.7.2"
 pdfkit = "^1.0.0"
 fire = "^0.5.0"
-sec-edgar-downloader = "^4.3.0"
+sec-edgar-downloader = "~5.0"
 pytickersymbols = "^1.13.0"
 awscli-local = "^0.20"
 

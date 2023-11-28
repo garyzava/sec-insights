@@ -10,7 +10,7 @@ import alembic.config
 from alembic import script
 from alembic.runtime import migration
 from sqlalchemy.engine import create_engine, Engine
-from llama_index.text_splitter.utils import split_by_sentence_tokenizer
+from llama_index.node_parser.text.utils import split_by_sentence_tokenizer
 
 from app.api.api import api_router
 from app.db.wait_for_db import check_database_connection
@@ -82,8 +82,12 @@ async def lifespan(app: FastAPI):
     vector_store = cast(CustomPGVectorStore, vector_store)
     await vector_store.run_setup()
 
-    # Some setup is required to initialize the llama-index sentence splitter
-    split_by_sentence_tokenizer()
+    try:
+        # Some setup is required to initialize the llama-index sentence splitter
+        split_by_sentence_tokenizer()
+    except FileExistsError:
+        # Sometimes seen in deployments, should be benign.
+        logger.info("Tried to re-download NLTK files but already exists.")
     yield
     # This section is run on app shutdown
     await vector_store.close()
